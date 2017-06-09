@@ -10,6 +10,8 @@ var Comment = require("./models/Comment.js")(mongoose);
 
 //initialize app
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 var port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: true}));
@@ -30,9 +32,8 @@ db.once("open", ()=>{
 });
 
 /*following requires void function which take in an app, models, and sets routes*/
-require("./controllers/api-router.js")(app, Article, Comment);
+require("./controllers/api-router.js")(app, io, Article, Comment);
 
-app.listen(port, function(){
+http.listen(port, function(){
 	console.log("App running on " + port);
-})
-
+});
