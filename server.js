@@ -19,7 +19,13 @@ app.use(express.static("public"));
 
 
 //************************************** connection needs to be dynamic by end
-mongoose.connect("mongodb://localhost/wikidb");
+var databaseUri = 'mongodb://localhost/wikidb';
+
+if(process.env.MONGODB_URI){
+	mongoose.connect(process.env.MONGODB_URI);
+}else{
+	mongoose.connect(databaseUri);
+}
 
 var db = mongoose.connection;
 //event listener fires iff the database connection fails...

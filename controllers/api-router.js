@@ -1,15 +1,11 @@
 //scraping modules
 var Crawler = require('./crawler.js');
 var crawlers = [];
+var crawl = false;
 
 module.exports = function(app, io, Article, Comment){
 	app.get('/', (req, res)=>{
 		res.sendFile('../public/index.html');
-	});
-
-	app.get('/api/crawler', (req, res)=>{
-
-		res.send('Scrape Complete')
 	});
 
 	app.get('/api/articles', (req, res)=>{
@@ -61,6 +57,7 @@ module.exports = function(app, io, Article, Comment){
 				let crawler = new Crawler(url, io);
 				crawlers.push(crawler);
 				io.emit('new crawler', crawler);
+				crawl = true;
 				crawler.level.next();
 			}else{
 				let crawler = matchedCrawler[0];
@@ -73,3 +70,4 @@ module.exports = function(app, io, Article, Comment){
 		});
 	});
 }
+

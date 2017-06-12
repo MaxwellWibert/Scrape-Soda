@@ -19,7 +19,7 @@
 			<input id='crawlUrl' autocomplete='off' placeholder='Enter Root URL Here (Default is https://www.wikipedia.org)'/>
 			<button>Crawl</button>
 		</form>
-		<script src='/socket.io/socket.io.js'></script>
+		<script src="/socket.io/socket.io.js"></script>
 		<script
 		  src='https://code.jquery.com/jquery-3.2.1.min.js'
 		  integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
@@ -30,11 +30,15 @@
 				$('form').submit(function(event){
 					event.preventDefault()
 					socket.emit('crawl', $('#crawlUrl').val().trim());
+					$('#crawlUrl').val('');
 					return false;
 				});
-				socket.on('new crawler', function(crawler){console.log(crawler);});
-				socket.on('old crawler', function(crawler){console.log(crawler);});
-				socket.on('new page', function(page){console.log(page);});
+				socket.on('new crawler', function(crawler){
+					console.log(crawler)
+				});
+				socket.on('old crawler', function(crawler){console.log(crawler)});
+				socket.on('new page', function(page){$('#pages').append($('<li>')
+					.html(`<a href=${page.url}><h3>${page.title}</h3></a> Number of Links: ${page.links.length}`))});
 			});
 		</script>
 	</body>

@@ -1,15 +1,19 @@
-var Article = function(mongoose){
+var Page = function(mongoose){
 	var Schema = mongoose.Schema;
 
-	var ArticleSchema = new Schema({
+	var PageSchema = new Schema({
 		title: {
 			type: String,
 			required: true
 		},
-		link: {
+		url: {
 			type: String,
 			required: true
 		},
+		links: {
+			type: [String],
+			default: []
+		}
 		comment: {
 			type: Schema.Types.ObjectId,
 			ref: "Comment"

@@ -24,6 +24,7 @@ function Crawler(rootURL, io){
 				page.links.push(el);
 			});
 			io.emit('new page', page);
+			
 		});		
 	}
 	/*upOne reads all page objects in currentLevel array
